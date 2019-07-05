@@ -1,0 +1,15 @@
+mat-panel-description{
+  flex-grow: unset;
+}
+.right .mat-form-field{
+  display: flex;
+  justify-content: flex-end;
+}
+.left{
+  position: absolute;
+  left: 0;
+}
+.example-full-width{
+  width: 100%;
+  height: 100%;
+}

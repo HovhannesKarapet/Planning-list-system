@@ -1,0 +1,85 @@
+<mat-grid-list cols="2" rowHeight="65px">
+  <mat-grid-tile>
+    <button mat-stroked-button (click)="openDialog()">
+      <i class="material-icons">add</i>Add a plan
+    </button>
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <mat-form-field>
+      <input matInput placeholder="Search" [value]="search" (input)='search = $event.target.value'>
+    </mat-form-field>
+  </mat-grid-tile>
+</mat-grid-list>
+
+<mat-grid-list cols="5" rowHeight="65px">
+  <form [formGroup]="form" (ngSubmit)="onFilter()">
+    <mat-grid-tile>
+      <mat-form-field class="example-full-width">
+        <mat-select placeholder="Status" formControlName="status">
+          <mat-option *ngFor="let item of status" [value]="item.value">
+            {{item.value}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <mat-form-field class="example-full-width">
+        <input matInput [matDatepicker]="picker1" placeholder="From" formControlName="from">
+        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+        <mat-datepicker #picker1></mat-datepicker>
+      </mat-form-field>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <mat-form-field class="example-full-width">
+        <input matInput [matDatepicker]="picker2" placeholder="To" formControlName="to">
+        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+        <mat-datepicker #picker2></mat-datepicker>
+      </mat-form-field>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <mat-form-field class="example-full-width">
+        <input matInput placeholder="Place Name" formControlName="place">
+      </mat-form-field>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <mat-form-field class="example-full-width">
+        <input matInput placeholder="Address" formControlName="address">
+      </mat-form-field>
+    </mat-grid-tile>
+  </form>
+</mat-grid-list>
+
+<mat-accordion>
+  <mat-expansion-panel *ngFor="let item of data | search: search | filter: form.value, let i = index">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        {{item.title}}
+      </mat-panel-title>
+      <mat-panel-description>
+        {{item.status}}
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <mat-grid-list cols="4" rowHeight="40px">
+      <mat-grid-tile [colspan]="4" [rowspan]="1">
+        <h4>{{item.title}}</h4>
+      </mat-grid-tile>
+      <mat-grid-tile [colspan]="4" [rowspan]="2">
+        <p>{{item.description}}</p>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <p>{{item.status}}</p>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <p>{{item.date | date:'shortDate'}}</p>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <p>{{item.place}}</p>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <p>{{item.address}}</p>
+      </mat-grid-tile>
+    </mat-grid-list>
+    <button type="button" mat-stroked-button (click)="onChange(i)">Change</button>
+    <button type="button" mat-stroked-button color="warn" (click)="onDelete(i)">Delete</button>
+  </mat-expansion-panel>
+</mat-accordion>
