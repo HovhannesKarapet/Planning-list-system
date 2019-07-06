@@ -40,11 +40,11 @@ export class ListComponent implements OnInit {
       this.data.forEach(item => {
         let d = new Date(item.date);
         let dd = d.getDate() + d.getMonth() + 1 + d.getFullYear();
-        if (moment > dd && item.status !== 'Completed') {
+        if (moment > dd && item.status !== 'Completed' && item.status !== 'Failed') {
           item.status = 'Failed';
           this.dataService.patchData(item.id, item).subscribe();
         }
-        if (moment === dd && item.status !== 'Completed') {
+        if (moment === dd && item.status !== 'Completed' && item.status !== 'Today') {
           item.status = 'Today';
           this.dataService.patchData(item.id, item).subscribe();
         }
